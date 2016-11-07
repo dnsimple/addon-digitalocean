@@ -1,0 +1,15 @@
+language: elixir
+sudo: required
+dist: trusty
+
+elixir:
+- 1.3.0
+
+services:
+  - postgresql
+
+addons:
+  postgresql: "9.5"
+
+before_script:
+  - mix ecto.create

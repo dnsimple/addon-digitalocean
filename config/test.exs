@@ -13,7 +13,7 @@ config :logger, level: :warn
 config :digitalocean_connector, DigitalOceanConnector.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "postgres",
+  # password: "postgres",
   database: "digitalocean_connector_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
