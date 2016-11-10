@@ -2,6 +2,6 @@ defmodule DigitalOceanConnector.PageController do
   use DigitalOceanConnector.Web, :controller
 
   def index(conn, _params) do
-    render conn, "index.html"
+    redirect conn, to: "/dnsimple/authorize"
   end
 end

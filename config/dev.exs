@@ -41,3 +41,10 @@ config :digitalocean_connector, DigitalOceanConnector.Repo,
   database: "digitalocean_connector_dev",
   hostname: "localhost",
   pool_size: 10
+
+# Configure 3rd parties
+config :digitalocean_connector,
+  dnsimple_client_id: "bbf472f1dcc6d611",
+  dnsimple_client_secret: "JHIKTQjbzCtoBlf0TKpvE1B7jj0DzdrZ"
+  # heroku_client_id: "c0920219-7ef7-41f9-8645-d599db85b2a5",
+  # heroku_client_secret: "f77ed12c-7126-4acc-9513-9143ebeae4e5"
