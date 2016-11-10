@@ -1,8 +1,8 @@
 defmodule DigitalOceanConnector.PageControllerTest do
-  use DigitalOceanConnector.ConnCase
+  use DigitalOceanConnector.ConnCase, async: true
 
   test "GET /", %{conn: conn} do
     conn = get conn, "/"
-    assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+    assert assert redirected_to(conn) =~ "/dnsimple/authorize"
   end
 end
