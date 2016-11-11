@@ -159,30 +159,30 @@ defmodule DigitalOceanConnector.Dnsimple do
   # Service modules
 
   defp oauth_service do
-    Application.get_env(:heroku_connector, :dnsimple_oauth_service, Dnsimple.Oauth)
+    Application.get_env(:digitalocean_connector, :dnsimple_oauth_service, Dnsimple.Oauth)
   end
 
   defp identity_service do
-    Application.get_env(:heroku_connector, :dnsimple_identity_service, Dnsimple.Identity)
+    Application.get_env(:digitalocean_connector, :dnsimple_identity_service, Dnsimple.Identity)
   end
 
   defp domains_service do
-    Application.get_env(:heroku_connector, :dnsimple_domains_service, Dnsimple.Domains)
+    Application.get_env(:digitalocean_connector, :dnsimple_domains_service, Dnsimple.Domains)
   end
 
   defp certificates_service do
-    Application.get_env(:heroku_connector, :dnsimple_domain_certificates_service, Dnsimple.Certificates)
+    Application.get_env(:digitalocean_connector, :dnsimple_domain_certificates_service, Dnsimple.Certificates)
   end
 
   defp services_service do
-    Application.get_env(:heroku_connector, :dnsimple_domain_services_service, Dnsimple.Services)
+    Application.get_env(:digitalocean_connector, :dnsimple_domain_services_service, Dnsimple.Services)
   end
 
   defp webhooks_service do
-    Application.get_env(:heroku_connector, :dnsimple_webhooks_service, Dnsimple.Webhooks)
+    Application.get_env(:digitalocean_connector, :dnsimple_webhooks_service, Dnsimple.Webhooks)
   end
 
   defp zones_service do
-    Application.get_env(:heroku_connector, :dnsimple_zones_service, Dnsimple.Zones)
+    Application.get_env(:digitalocean_connector, :dnsimple_zones_service, Dnsimple.Zones)
   end
 end
