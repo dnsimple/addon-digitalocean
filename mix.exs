@@ -19,7 +19,7 @@ defmodule DigitalOceanConnector.Mixfile do
   def application do
     [mod: {DigitalOceanConnector, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :dnsimple]]
+                    :phoenix_ecto, :postgrex, :dnsimple, :httpoison]]
   end
 
   # Specifies which paths to compile per environment.
@@ -38,7 +38,8 @@ defmodule DigitalOceanConnector.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
-     {:dnsimple, git: "https://github.com/dnsimple/dnsimple-elixir.git"}]
+     {:dnsimple, git: "https://github.com/nesQuick/dnsimple-elixir.git", branch: "update-httpoison"},
+     {:httpoison, "~> 0.10.0"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

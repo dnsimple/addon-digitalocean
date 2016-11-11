@@ -22,7 +22,8 @@ config :digitalocean_connector,
   dnsimple_client_id: "dnsimple-client-id",
   dnsimple_client_secret: "dnsimple-client-secret",
   digitalocean_client_id: "digitalocean-client-id",
-  digitalocean_callback_url: "http://host.tld:3000/digitalocean/callback",
+  digitalocean_callback_url: "http://host.tld:4000/digitalocean/callback",
   digitalocean_client_secret: "digitalocean-client-secret",
   dnsimple_oauth_service: DigitalOceanConnector.Dnsimple.OauthMock,
-  dnsimple_identity_service: DigitalOceanConnector.Dnsimple.IdentityMock
+  dnsimple_identity_service: DigitalOceanConnector.Dnsimple.IdentityMock,
+  digitalocean_oauth_service: DigitalOceanConnector.DigitalOcean.OauthMock

@@ -20,6 +20,9 @@ defmodule DigitalOceanConnector.Router do
 
     get "/dnsimple/authorize", DnsimpleOauthController, :new
     get "/dnsimple/callback", DnsimpleOauthController, :create
+
+    get "/digitalocean/authorize", DigitalOceanOauthController, :new
+    get "/digitalocean/callback", DigitalOceanOauthController, :create
   end
 
   # Other scopes may use custom stacks.
