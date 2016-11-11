@@ -43,7 +43,7 @@ defmodule DigitalOceanConnector.Account do
   def find_or_create!(dnsimple_account_id, params \\ %{}) do
     case Repo.get_by(Account, dnsimple_account_id: dnsimple_account_id) do
       nil -> create!(%Account{dnsimple_account_id: dnsimple_account_id}, params)
-      account -> {:ok, account}
+      account -> account
     end
   end
 end

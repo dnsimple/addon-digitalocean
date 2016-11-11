@@ -31,7 +31,7 @@ defmodule DigitalOceanConnector.DnsimpleOauthController do
         client = %Dnsimple.Client{access_token: access_token}
         case DigitalOceanConnector.Dnsimple.whoami(client) do
           {:ok, %Dnsimple.Response{data: data}} ->
-            {:ok, account} = Account.find_or_create!(Integer.to_string(data.account.id), %{
+            account = Account.find_or_create!(Integer.to_string(data.account.id), %{
               "dnsimple_account_email" => data.account.email,
               "dnsimple_access_token" => access_token
             })
