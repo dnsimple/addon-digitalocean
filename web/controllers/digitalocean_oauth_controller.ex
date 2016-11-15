@@ -43,11 +43,6 @@ defmodule DigitalOceanConnector.DigitalOceanOauthController do
     })
     |> Account.update!
 
-    # case DigitalOceanConnector.Dnsimple.exchange_authorization_for_token(client, attributes) do
-    # end
-    # redirect conn, to: "/connections"
-    conn
-    |> put_resp_content_type("text/plain")
-    |> send_resp(200, "Hello #{response["info"]["name"]}")
+    redirect conn, to: "/connections"
   end
 end

@@ -23,6 +23,8 @@ defmodule DigitalOceanConnector.Router do
 
     get "/digitalocean/authorize", DigitalOceanOauthController, :new
     get "/digitalocean/callback", DigitalOceanOauthController, :create
+
+    resources "/connections", ConnectionController
   end
 
   # Other scopes may use custom stacks.

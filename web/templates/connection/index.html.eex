@@ -1,0 +1,32 @@
+<h2>New connection</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: connection_path(@conn, :create) %>
+
+
+<h2>Listing connections</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Dnsimple domain</th>
+      <th>Digitalocean droplet</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for connection <- @connections do %>
+    <tr>
+      <td><%= connection.dnsimple_domain_id %></td>
+      <td><%= connection.digitalocean_droplet_id %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: connection_path(@conn, :show, connection), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: connection_path(@conn, :edit, connection), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: connection_path(@conn, :delete, connection), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
