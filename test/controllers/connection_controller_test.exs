@@ -1,9 +1,17 @@
 defmodule DigitalOceanConnector.ConnectionControllerTest do
   use DigitalOceanConnector.ConnCase
 
+  alias DigitalOceanConnector.Account
   alias DigitalOceanConnector.Connection
+
   @valid_attrs %{digitalocean_droplet_id: 42, dnsimple_domain_id: "some content"}
   @invalid_attrs %{}
+
+  setup %{conn: conn} do
+    {:ok, account} = Account.create(%Account{dnsimple_account_id: "1", digitalocean_account_id: "2", dnsimple_account_email: "user@service.tld", dnsimple_access_token: "12345"})
+    conn = assign(conn, :current_account, account)
+    {:ok, account: account, conn: conn}
+  end
 
   test "lists all entries on index", %{conn: conn} do
     conn = get conn, connection_path(conn, :index)

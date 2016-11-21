@@ -1,6 +1,8 @@
 defmodule DigitalOceanConnector.ConnectionController do
   use DigitalOceanConnector.Web, :controller
 
+  plug DigitalOceanConnector.Plug.CurrentAccount
+
   alias DigitalOceanConnector.Connection
 
   def index(conn, _params) do

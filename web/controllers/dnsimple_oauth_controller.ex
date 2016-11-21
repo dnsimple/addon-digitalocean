@@ -59,7 +59,7 @@ defmodule DigitalOceanConnector.DnsimpleOauthController do
 
             conn
             |> put_session(:account_id, account.id)
-            |> render("welcome.html", account: account)
+            |> redirect(to: connection_path(conn, :index))
           {:error, error} ->
             IO.inspect(error)
             raise "Failed to retreive account details: #{inspect error}"
