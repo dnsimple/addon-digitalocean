@@ -2,7 +2,6 @@ defmodule DigitalOceanConnector.Plug.CurrentAccountTest do
   use ExUnit.Case, async: true
   use Plug.Test
 
-  alias DigitalOceanConnector.Account
   alias DigitalOceanConnector.Plug.CurrentAccount
 
   @session Plug.Session.init(
@@ -15,18 +14,16 @@ defmodule DigitalOceanConnector.Plug.CurrentAccountTest do
   setup do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(DigitalOceanConnector.Repo)
 
-    account = %Account{
-      id: 1
+    account = %{
+      "dnsimple_access_token" => "dnsimple-token",
+      "digitalocean_access_token" => "do-token"
     }
-    DigitalOceanConnector.Repo.insert!(account)
-
-    session_data = %{current_account: account.id}
 
     conn = conn(:get, "/")
     |> Map.put(:secret_key_base, String.duplicate("abcdcefg", 8))
     |> Plug.Session.call(@session)
     |> Plug.Conn.fetch_session
-    {:ok, conn: conn, account: account, session_data: session_data}
+    {:ok, conn: conn, account: account}
   end
 
   test "current_account returns the account if it is in conn.assigns", %{conn: conn, account: account} do
@@ -34,13 +31,8 @@ defmodule DigitalOceanConnector.Plug.CurrentAccountTest do
     assert CurrentAccount.current_account(conn) == account
   end
 
-  test "current_account returns nil if the account is not in assigns or session", %{conn: conn} do
-    assert CurrentAccount.current_account(conn) == nil
-  end
-
-  test "account_connected? returns true if current account is set", %{conn: conn, account: account} do
-    conn = Plug.Conn.assign(conn, :current_account, account)
-    assert CurrentAccount.account_connected?(conn)
+  test "current_account returns empty account struct if the account is not in assigns or session", %{conn: conn} do
+    assert CurrentAccount.current_account(conn) == %{"digitalocean_access_token" => nil, "dnsimple_access_token" => nil}
   end
 
   test "redirect if there is no account in the session", %{conn: conn} do

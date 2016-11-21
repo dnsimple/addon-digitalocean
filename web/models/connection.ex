@@ -2,7 +2,6 @@ defmodule DigitalOceanConnector.Connection do
   use DigitalOceanConnector.Web, :model
 
   schema "connections" do
-    belongs_to :account, DigitalOceanConnector.Account
     field :dnsimple_domain_id, :string
     field :digitalocean_droplet_id, :integer
 
