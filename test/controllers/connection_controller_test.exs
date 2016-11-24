@@ -8,8 +8,8 @@ defmodule DigitalOceanConnector.ConnectionControllerTest do
 
   setup %{conn: conn} do
     conn = assign(conn, :current_account, %{
-      "dnsimple_access_token" => "anytoken",
-      "digitalocean_access_token" => "some other token"
+      :dnsimple_access_token => "anytoken",
+      :digitalocean_access_token => "some other token"
     })
     {:ok, conn: conn}
   end
@@ -27,12 +27,6 @@ defmodule DigitalOceanConnector.ConnectionControllerTest do
   test "creates resource and redirects when data is valid", %{conn: conn} do
     conn = post conn, connection_path(conn, :create), connection: @valid_attrs
     assert redirected_to(conn) == connection_path(conn, :index)
-    assert Repo.get_by(Connection, @valid_attrs)
-  end
-
-  test "does not create resource and renders errors when data is invalid", %{conn: conn} do
-    conn = post conn, connection_path(conn, :create), connection: @invalid_attrs
-    assert html_response(conn, 200) =~ "New connection"
   end
 
   test "shows chosen resource", %{conn: conn} do

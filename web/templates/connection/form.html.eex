@@ -7,13 +7,13 @@
 
   <div class="form-group">
     <%= label f, :dnsimple_domain_id, class: "control-label" %>
-    <%= text_input f, :dnsimple_domain_id, class: "form-control" %>
+    <%= select f, :dnsimple_domain_id, domain_select_options(@domains), class: "form-control" %>
     <%= error_tag f, :dnsimple_domain_id %>
   </div>
 
   <div class="form-group">
     <%= label f, :digitalocean_droplet_id, class: "control-label" %>
-    <%= number_input f, :digitalocean_droplet_id, class: "form-control" %>
+    <%= select f, :digitalocean_droplet_id, droplet_select_options(@droplets), class: "form-control" %>
     <%= error_tag f, :digitalocean_droplet_id %>
   </div>
 

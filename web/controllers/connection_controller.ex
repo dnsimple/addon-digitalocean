@@ -4,29 +4,39 @@ defmodule DigitalOceanConnector.ConnectionController do
   plug DigitalOceanConnector.Plug.CurrentAccount
 
   alias DigitalOceanConnector.Connection
+  alias DigitalOceanConnector.ConnectionService
+  alias DigitalOceanConnector.DigitalOcean
 
   def index(conn, _params) do
     changeset = Connection.changeset(%Connection{})
     connections = Repo.all(Connection)
-    render(conn, "index.html", connections: connections, changeset: changeset)
+    account = conn.assigns[:current_account]
+    render(conn, "index.html", connections: connections, changeset: changeset,
+                      domains: DigitalOceanConnector.Dnsimple.domains(account),
+                      droplets: DigitalOceanConnector.DigitalOcean.list_droplets(account.digitalocean_access_token))
   end
 
   def new(conn, _params) do
     changeset = Connection.changeset(%Connection{})
-    render(conn, "new.html", changeset: changeset)
+    account = conn.assigns[:current_account]
+    render(conn, "new.html", changeset: changeset, domains: DigitalOceanConnector.Dnsimple.domains(account),
+                              droplets: DigitalOceanConnector.DigitalOcean.list_droplets(account.digitalocean_access_token))
   end
 
-  def create(conn, %{"connection" => connection_params}) do
+  def create(conn, %{"connection" => %{"dnsimple_domain_id" => domain_name, "digitalocean_droplet_id" => droplet_id} = connection_params}) do
     changeset = Connection.changeset(%Connection{}, connection_params)
+    account = conn.assigns[:current_account]
 
-    case Repo.insert(changeset) do
-      {:ok, _connection} ->
-        conn
-        |> put_flash(:info, "Connection created successfully.")
-        |> redirect(to: connection_path(conn, :index))
-      {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
-    end
+    ConnectionService.create_connection(domain_name, droplet_id, account)
+
+    # case Repo.insert(changeset) do
+    #   {:ok, _connection} ->
+    conn
+    # |> put_flash(:info, "Connection created successfully.")
+    |> redirect(to: connection_path(conn, :index))
+    #   {:error, changeset} ->
+    #     render(conn, "new.html", changeset: changeset)
+    # end
   end
 
   def show(conn, %{"id" => id}) do
@@ -37,7 +47,10 @@ defmodule DigitalOceanConnector.ConnectionController do
   def edit(conn, %{"id" => id}) do
     connection = Repo.get!(Connection, id)
     changeset = Connection.changeset(connection)
-    render(conn, "edit.html", connection: connection, changeset: changeset)
+    account = conn.assigns[:current_account]
+    render(conn, "edit.html", connection: connection, changeset: changeset,
+                        domains: DigitalOceanConnector.Dnsimple.domains(account),
+                        droplets: DigitalOceanConnector.DigitalOcean.list_droplets(account.digitalocean_access_token))
   end
 
   def update(conn, %{"id" => id, "connection" => connection_params}) do
@@ -50,7 +63,9 @@ defmodule DigitalOceanConnector.ConnectionController do
         |> put_flash(:info, "Connection updated successfully.")
         |> redirect(to: connection_path(conn, :show, connection))
       {:error, changeset} ->
-        render(conn, "edit.html", connection: connection, changeset: changeset)
+        account = conn.assigns[:current_account]
+        render(conn, "edit.html", connection: connection, changeset: changeset, domains: DigitalOceanConnector.Dnsimple.domains(account),
+        droplets: DigitalOceanConnector.DigitalOcean.list_droplets(account.digitalocean_access_token))
     end
   end
 
