@@ -18,7 +18,7 @@ defmodule DigitalOceanConnector.Dnsimple do
   # Domains
 
   def domains(account) do
-    case domains_service.all_domains(client(account), account_id(account)) do
+    case domains_service.all_domains(client(account), account.dnsimple_account_id) do
       {:ok, domains} -> domains
       {:error, error} ->
         IO.inspect(error)
@@ -114,11 +114,10 @@ defmodule DigitalOceanConnector.Dnsimple do
 
   def create_records(account, zone_name, records) do
     c = client(account)
-    id = account_id(account)
     zs = zones_service
 
     Enum.map(records, fn(record) ->
-      zs.create_zone_record(c, id, zone_name, record_to_map(record))
+      zs.create_zone_record(c, account.dnsimple_account_id, zone_name, record_to_map(record))
     end)
   end
 
@@ -160,11 +159,6 @@ defmodule DigitalOceanConnector.Dnsimple do
 
   def client(account) do
     %Dnsimple.Client{access_token: account.dnsimple_access_token}
-  end
-
-  def account_id(account) do
-    {:ok, response} = whoami(client(account))
-    response.data.account.id
   end
 
   # Service modules

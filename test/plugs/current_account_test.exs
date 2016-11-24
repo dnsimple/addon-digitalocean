@@ -16,6 +16,7 @@ defmodule DigitalOceanConnector.Plug.CurrentAccountTest do
 
     account = %{
       :dnsimple_access_token => "dnsimple-token",
+      :dnsimple_account_id => "1234",
       :digitalocean_access_token => "do-token"
     }
 
@@ -32,7 +33,7 @@ defmodule DigitalOceanConnector.Plug.CurrentAccountTest do
   end
 
   test "current_account returns empty account struct if the account is not in assigns or session", %{conn: conn} do
-    assert CurrentAccount.current_account(conn) == %{:digitalocean_access_token => nil, :dnsimple_access_token => nil}
+    assert CurrentAccount.current_account(conn) == %{:digitalocean_access_token => nil, :dnsimple_access_token => nil, :dnsimple_account_id => nil}
   end
 
   test "redirect if there is no account in the session", %{conn: conn} do

@@ -25,9 +25,9 @@ defmodule DigitalOceanConnector.DnsimpleOauthController do
     }
     case DigitalOceanConnector.Dnsimple.exchange_authorization_for_token(client, attributes) do
       {:ok, response} ->
-        access_token = response.data.access_token
         conn
-        put_session(conn, :dnsimple_access_token, access_token)
+        |> put_session(:dnsimple_access_token, response.data.access_token)
+        |> put_session(:dnsimple_account_id, response.data.account_id)
         |> redirect(to: connection_path(conn, :index))
       {:error, error} ->
         IO.inspect(error)

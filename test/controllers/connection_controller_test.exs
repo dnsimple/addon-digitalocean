@@ -9,6 +9,7 @@ defmodule DigitalOceanConnector.ConnectionControllerTest do
   setup %{conn: conn} do
     conn = assign(conn, :current_account, %{
       :dnsimple_access_token => "anytoken",
+      :dnsimple_account_id => "1234",
       :digitalocean_access_token => "some other token"
     })
     {:ok, conn: conn}

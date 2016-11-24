@@ -28,6 +28,7 @@ defmodule DigitalOceanConnector.Plug.CurrentAccount do
   def build_account(conn) do
     %{
       :dnsimple_access_token => get_session(conn, :dnsimple_access_token),
+      :dnsimple_account_id => get_session(conn, :dnsimple_account_id),
       :digitalocean_access_token => get_session(conn, :digitalocean_access_token)
     }
   end
