@@ -12,8 +12,6 @@ defmodule DigitalOceanConnector.Plug.CurrentAccountTest do
   )
 
   setup do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(DigitalOceanConnector.Repo)
-
     account = %{
       :dnsimple_access_token => "dnsimple-token",
       :dnsimple_account_id => "1234",

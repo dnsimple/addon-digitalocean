@@ -20,7 +20,6 @@ defmodule DigitalOceanConnector.ChannelCase do
       # Import conveniences for testing with channels
       use Phoenix.ChannelTest
 
-      alias DigitalOceanConnector.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
@@ -29,15 +28,5 @@ defmodule DigitalOceanConnector.ChannelCase do
       # The default endpoint for testing
       @endpoint DigitalOceanConnector.Endpoint
     end
-  end
-
-  setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(DigitalOceanConnector.Repo)
-
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(DigitalOceanConnector.Repo, {:shared, self()})
-    end
-
-    :ok
   end
 end

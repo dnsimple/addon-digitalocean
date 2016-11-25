@@ -34,33 +34,15 @@ defmodule DigitalOceanConnector.ConnectionController do
   end
 
   def show(conn, %{"id" => id}) do
-    connection = Repo.get!(Connection, id)
-    render(conn, "show.html", connection: connection)
+    redirect(conn, to: connection_path(conn, :index))
   end
 
   def edit(conn, %{"id" => id}) do
-    connection = Repo.get!(Connection, id)
-    changeset = Connection.changeset(connection)
-    account = conn.assigns[:current_account]
-    render(conn, "edit.html", connection: connection, changeset: changeset,
-                        domains: DigitalOceanConnector.Dnsimple.domains(account),
-                        droplets: DigitalOceanConnector.DigitalOcean.list_droplets(account.digitalocean_access_token))
+    redirect(conn, to: connection_path(conn, :index))
   end
 
   def update(conn, %{"id" => id, "connection" => connection_params}) do
-    connection = Repo.get!(Connection, id)
-    changeset = Connection.changeset(connection, connection_params)
-
-    case Repo.update(changeset) do
-      {:ok, connection} ->
-        conn
-        |> put_flash(:info, "Connection updated successfully.")
-        |> redirect(to: connection_path(conn, :show, connection))
-      {:error, changeset} ->
-        account = conn.assigns[:current_account]
-        render(conn, "edit.html", connection: connection, changeset: changeset, domains: DigitalOceanConnector.Dnsimple.domains(account),
-        droplets: DigitalOceanConnector.DigitalOcean.list_droplets(account.digitalocean_access_token))
-    end
+    redirect(conn, to: connection_path(conn, :index))
   end
 
   def delete(conn, %{"id" => id, "records" => records} = params) do
