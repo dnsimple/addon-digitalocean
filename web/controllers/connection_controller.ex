@@ -8,18 +8,17 @@ defmodule DigitalOceanConnector.ConnectionController do
   alias DigitalOceanConnector.DigitalOcean
 
   def index(conn, _params) do
-    changeset = Connection.changeset(%Connection{})
     account = conn.assigns[:current_account]
-    render(conn, "index.html", changeset: changeset,
+    render(conn, "index.html", changeset: Connection.changeset(%Connection{}),
                       domains: DigitalOceanConnector.Dnsimple.domains(account),
                       droplets: DigitalOceanConnector.DigitalOcean.list_droplets(account.digitalocean_access_token),
                       connections: DigitalOceanConnector.ConnectionService.get_connections(account))
   end
 
   def new(conn, _params) do
-    changeset = Connection.changeset(%Connection{})
     account = conn.assigns[:current_account]
-    render(conn, "new.html", changeset: changeset, domains: DigitalOceanConnector.Dnsimple.domains(account),
+    render(conn, "new.html", changeset: changeset = Connection.changeset(%Connection{}),
+                              domains: DigitalOceanConnector.Dnsimple.domains(account),
                               droplets: DigitalOceanConnector.DigitalOcean.list_droplets(account.digitalocean_access_token))
   end
 
@@ -29,14 +28,9 @@ defmodule DigitalOceanConnector.ConnectionController do
 
     ConnectionService.create_connection(domain_name, droplet_id, account)
 
-    # case Repo.insert(changeset) do
-    #   {:ok, _connection} ->
     conn
-    # |> put_flash(:info, "Connection created successfully.")
+    |> put_flash(:info, "Connection created successfully.")
     |> redirect(to: connection_path(conn, :index))
-    #   {:error, changeset} ->
-    #     render(conn, "new.html", changeset: changeset)
-    # end
   end
 
   def show(conn, %{"id" => id}) do
@@ -69,12 +63,10 @@ defmodule DigitalOceanConnector.ConnectionController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    connection = Repo.get!(Connection, id)
+  def delete(conn, %{"id" => id, "records" => records} = params) do
+    account = conn.assigns[:current_account]
 
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    Repo.delete!(connection)
+    DigitalOceanConnector.Dnsimple.delete_records(account, id, records)
 
     conn
     |> put_flash(:info, "Connection deleted successfully.")

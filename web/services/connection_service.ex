@@ -21,18 +21,29 @@ defmodule DigitalOceanConnector.ConnectionService do
 
   def find_connections(domains, droplets) do
     Enum.map(domains, fn ({domain, records}) ->
-      {domain, Enum.find(droplets, fn(droplet) -> if has_matching_records?(records, domain, droplet), do: droplet, else: nil end)}
+      {domain, Enum.find(droplets, fn(droplet) -> if has_matching_records?(records, domain, droplet), do: droplet, else: nil end), records}
     end)
-    |> Enum.filter(fn ({domain, droplet}) -> droplet end) # filter when droplet is nil
+    |> Enum.filter(fn ({domain, droplet, _records}) -> droplet end) # filter when droplet is nil
+    |> Enum.map(fn({domain, droplet, records}) ->
+      records = matching_records(records, domain, droplet)
+      |> Tuple.to_list
+      |> Enum.filter(&(&1))
+      {domain, droplet, records}
+    end)
+  end
+
+  defp matching_records(records, domain, droplet) do
+    ips = Enum.into(DigitalOcean.get_ips_from_droplet(droplet), %{})
+    cname_record = Enum.find(records, &(&1.type == "CNAME" && &1.name == "www") && &1.content == domain.name)
+    a_record = Enum.find(records, &(&1.type == "A" && &1.name == "" && &1.content == ips["v4"] ))
+    aaaa_record = Enum.find(records, &(&1.type == "AAAA" && &1.name == "" && &1.content == ips["v6"] ))
+
+    {cname_record, a_record, aaaa_record}
   end
 
   defp has_matching_records?(records, domain, droplet) do
-    ips = Enum.into(DigitalOcean.get_ips_from_droplet(droplet), %{})
-    cname_record = Enum.any?(records, &(&1.type == "CNAME" && &1.name == "www") && &1.content == domain.name)
-    a_record = Enum.any?(records, &(&1.type == "A" && &1.name == "" && &1.content == ips["v4"] ))
-    aaaa_record = Enum.any?(records, &(&1.type == "AAAA" && &1.name == "" && &1.content == ips["v6"] ))
-
-    cname_record && (a_record || aaaa_record)
+    {cname_record, a_record, aaaa_record} = matching_records(records, domain, droplet)
+    !!cname_record && (!!a_record || !!aaaa_record)
   end
 
   def get_zone_records(networks, domain_name, records \\ [])

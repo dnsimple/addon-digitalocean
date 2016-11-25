@@ -62,9 +62,7 @@ defmodule DigitalOceanConnector.ConnectionControllerTest do
   end
 
   test "deletes chosen resource", %{conn: conn} do
-    connection = Repo.insert! %Connection{}
-    conn = delete conn, connection_path(conn, :delete, connection)
+    conn = delete conn, connection_path(conn, :delete, "example.com", records: [123,234,345])
     assert redirected_to(conn) == connection_path(conn, :index)
-    refute Repo.get(Connection, connection.id)
   end
 end

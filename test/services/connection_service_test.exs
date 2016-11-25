@@ -65,8 +65,12 @@ defmodule DigitalOceanConnector.ConnectionServiceTest do
         "networks" => %{
           "v4" => [%{"gateway" => "138.68.64.1", "ip_address" => "138.68.76.233", "netmask" => "255.255.240.0", "type" => "public"}],
           "v6" => [%{"gateway" => "2A03:B0C0:0003:00D0:0000:0000:0000:0001", "ip_address" => "2A03:B0C0:0003:00D0:0000:0000:224F:5001", "netmask" => 64, "type" => "public"}]
-        }
-      }}
+        }}, [
+          %Dnsimple.ZoneRecord{content: "tests-in.space", created_at: nil, id: nil, name: "www", parent_id: nil, priority: nil, regions: nil, system_record: nil, ttl: nil, type: "CNAME", updated_at: nil, zone_id: "tests-in.space"},
+          %Dnsimple.ZoneRecord{content: "138.68.76.233", created_at: nil, id: nil, name: "", parent_id: nil, priority: nil, regions: nil, system_record: nil, ttl: nil, type: "A", updated_at: nil, zone_id: "tests-in.space"},
+          %Dnsimple.ZoneRecord{content: "2A03:B0C0:0003:00D0:0000:0000:224F:5001", created_at: nil, id: nil, name: "", parent_id: nil, priority: nil, regions: nil, system_record: nil, ttl: nil, type: "AAAA", updated_at: nil, zone_id: "tests-in.space"}
+        ]
+      }
     ]
   end
 
