@@ -112,6 +112,15 @@ defmodule DigitalOceanConnector.Dnsimple do
 
   # Records
 
+  def get_records(account, zone_name) do
+    case zones_service.list_zone_records(client(account), account.dnsimple_account_id, zone_name) do
+      {:ok, response} -> response.data
+      {:error, error} ->
+        IO.inspect(error)
+        raise "Failed to get records: #{inspect error}"
+    end
+  end
+
   def create_records(account, zone_name, records) do
     c = client(account)
     zs = zones_service

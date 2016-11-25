@@ -1,12 +1,38 @@
 defmodule DigitalOceanConnector.ConnectionService do
 
   alias DigitalOceanConnector.DigitalOcean
+  alias DigitalOceanConnector.Dnsimple, as: DnsimpleGateway
 
   def create_connection(domain_name, droplet_id, account) do
     DigitalOcean.get_droplet(account.digitalocean_access_token, droplet_id)
     |> DigitalOcean.get_ips_from_droplet
     |> get_zone_records(domain_name)
     |> submit(account, domain_name)
+  end
+
+  def get_connections(account) do
+    droplets = DigitalOcean.list_droplets(account.digitalocean_access_token)
+    domains = DnsimpleGateway.domains(account)
+    |> Enum.map(fn(domain) -> Task.async(fn -> {domain, DnsimpleGateway.get_records(account, domain.name)} end) end)
+    |> Enum.map(&(Task.await/1))
+
+    find_connections(domains, droplets)
+  end
+
+  def find_connections(domains, droplets) do
+    Enum.map(domains, fn ({domain, records}) ->
+      {domain, Enum.find(droplets, fn(droplet) -> if has_matching_records?(records, domain, droplet), do: droplet, else: nil end)}
+    end)
+    |> Enum.filter(fn ({domain, droplet}) -> droplet end) # filter when droplet is nil
+  end
+
+  defp has_matching_records?(records, domain, droplet) do
+    ips = Enum.into(DigitalOcean.get_ips_from_droplet(droplet), %{})
+    cname_record = Enum.any?(records, &(&1.type == "CNAME" && &1.name == "www") && &1.content == domain.name)
+    a_record = Enum.any?(records, &(&1.type == "A" && &1.name == "" && &1.content == ips["v4"] ))
+    aaaa_record = Enum.any?(records, &(&1.type == "AAAA" && &1.name == "" && &1.content == ips["v6"] ))
+
+    cname_record && (a_record || aaaa_record)
   end
 
   def get_zone_records(networks, domain_name, records \\ [])
