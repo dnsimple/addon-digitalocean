@@ -23,7 +23,7 @@ defmodule DigitalOceanConnector.ConnectionService do
     Enum.map(domains, fn ({domain, records}) ->
       {domain, Enum.find(droplets, fn(droplet) -> if has_matching_records?(records, domain, droplet), do: droplet, else: nil end), records}
     end)
-    |> Enum.filter(fn ({domain, droplet, _records}) -> droplet end) # filter when droplet is nil
+    |> Enum.filter(fn ({_domain, droplet, _records}) -> droplet end) # filter when droplet is nil
     |> Enum.map(fn({domain, droplet, records}) ->
       records = matching_records(records, domain, droplet)
       |> Tuple.to_list

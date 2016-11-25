@@ -6,24 +6,24 @@ defmodule DigitalOceanConnector.ConnectionController do
   alias DigitalOceanConnector.Connection
   alias DigitalOceanConnector.ConnectionService
   alias DigitalOceanConnector.DigitalOcean
+  alias DigitalOceanConnector.Dnsimple
 
   def index(conn, _params) do
     account = conn.assigns[:current_account]
     render(conn, "index.html", changeset: Connection.changeset(%Connection{}),
-                      domains: DigitalOceanConnector.Dnsimple.domains(account),
-                      droplets: DigitalOceanConnector.DigitalOcean.list_droplets(account.digitalocean_access_token),
-                      connections: DigitalOceanConnector.ConnectionService.get_connections(account))
+                      domains: Dnsimple.domains(account),
+                      droplets: DigitalOcean.list_droplets(account.digitalocean_access_token),
+                      connections: ConnectionService.get_connections(account))
   end
 
   def new(conn, _params) do
     account = conn.assigns[:current_account]
-    render(conn, "new.html", changeset: changeset = Connection.changeset(%Connection{}),
-                              domains: DigitalOceanConnector.Dnsimple.domains(account),
-                              droplets: DigitalOceanConnector.DigitalOcean.list_droplets(account.digitalocean_access_token))
+    render(conn, "new.html", changeset: Connection.changeset(%Connection{}),
+                              domains: Dnsimple.domains(account),
+                              droplets: DigitalOcean.list_droplets(account.digitalocean_access_token))
   end
 
-  def create(conn, %{"connection" => %{"dnsimple_domain_id" => domain_name, "digitalocean_droplet_id" => droplet_id} = connection_params}) do
-    changeset = Connection.changeset(%Connection{}, connection_params)
+  def create(conn, %{"connection" => %{"dnsimple_domain_id" => domain_name, "digitalocean_droplet_id" => droplet_id}}) do
     account = conn.assigns[:current_account]
 
     ConnectionService.create_connection(domain_name, droplet_id, account)
@@ -33,22 +33,22 @@ defmodule DigitalOceanConnector.ConnectionController do
     |> redirect(to: connection_path(conn, :index))
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"id" => _id}) do
     redirect(conn, to: connection_path(conn, :index))
   end
 
-  def edit(conn, %{"id" => id}) do
+  def edit(conn, %{"id" => _id}) do
     redirect(conn, to: connection_path(conn, :index))
   end
 
-  def update(conn, %{"id" => id, "connection" => connection_params}) do
+  def update(conn, %{"id" => _id, "connection" => _connection_params}) do
     redirect(conn, to: connection_path(conn, :index))
   end
 
-  def delete(conn, %{"id" => id, "records" => records} = params) do
+  def delete(conn, %{"id" => id, "records" => records}) do
     account = conn.assigns[:current_account]
 
-    DigitalOceanConnector.Dnsimple.delete_records(account, id, records)
+    Dnsimple.delete_records(account, id, records)
 
     conn
     |> put_flash(:info, "Connection deleted successfully.")
