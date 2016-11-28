@@ -3,13 +3,10 @@ sudo: required
 dist: trusty
 
 elixir:
-- 1.3.0
+- 1.3.2
 
-services:
-  - postgresql
-
-addons:
-  postgresql: "9.5"
-
-before_script:
-  - mix ecto.create
+deploy:
+  provider: heroku
+  app: addon-digitalocean-connector
+  api_key:
+    secure: "S4Ucb5ce1GHryPhH98tcfyyRwx2TkhtmHUar0h5l5RPjTC94ACzdttjXxkDh4pbHkulSUhO7iiML6XOGVjUxWayRNk07XlIzx0+KAfilH2olWtXmLShKD1rbT0AtgVvPyElvq7UhOjixR1X5EA8BXEo6FCM7OBs5DK3nSkrZgnowss6kwYY0mSSVVzFdpHPsLvy5Y2ojzY8bNwwVSxJoP6MzeSKW+T9yDodRYSm14bzXRCxKQsB8HnBg8W2kqjIrv4eLn8xp/cEgsK6hsTAtSLmmM+BjxgzmbqTt/tMATRZJUMR5LLvXdRpO0CVd5wW19LENOWCLXKex/kk+nCt8+UD1Cj/YzzrhwnbJqiPBOlPZkqE2Fp1CMKOMERdjaDenERO3WdDCo0uc+uGu41fVA7peQZtnu/XNS1oGsB0wEjNZMUKP7Z+NsKOdoHoLSQgVdVy0EdBBnFS55rPTNeNt/XeD508w/2mPng+bI2sOI2XkPv3bZ9bpMNbM1UZup63DP3Divtn0PiutaURC+7rL6vfSZeq+0rCbKKzVUy+nzj7L0XXiogtiFFo1EkH32Ph2PVt5HW0dhWGtnqkm6psK1eWeEIUS+2RXk3CY2q4LXzrmiM9ZK/+uTVs0r54ChPqCHfn+CqHsF+EiyObPH7o5xfg62Dra6WKOG0t4/J5Xvuo="
