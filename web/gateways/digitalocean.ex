@@ -1,7 +1,5 @@
 defmodule DigitalOceanConnector.DigitalOcean do
 
-  alias DigitalOceanConnector.DigitalOceanApi
-
   @oauthbase "https://cloud.digitalocean.com/v1/oauth"
   @apibase "https://api.digitalocean.com/v2"
 

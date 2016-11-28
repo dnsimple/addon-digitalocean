@@ -30,7 +30,6 @@ defmodule DigitalOceanConnector.Web do
     quote do
       use Phoenix.Controller, namespace: DigitalOceanConnector
 
-      alias DigitalOceanConnector.Repo
       import Ecto
       import Ecto.Query
 
@@ -65,7 +64,6 @@ defmodule DigitalOceanConnector.Web do
     quote do
       use Phoenix.Channel
 
-      alias DigitalOceanConnector.Repo
       import Ecto
       import Ecto.Query
       import DigitalOceanConnector.Gettext

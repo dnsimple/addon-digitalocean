@@ -33,15 +33,6 @@ config :logger, :console, format: "[$level] $message\n"
 # in production as building large stacktraces may be expensive.
 config :phoenix, :stacktrace_depth, 20
 
-# Configure your database
-config :digitalocean_connector, DigitalOceanConnector.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  # username: "postgres",
-  # password: "postgres",
-  database: "digitalocean_connector_dev",
-  hostname: "localhost",
-  pool_size: 10
-
 # Configure 3rd parties
 config :digitalocean_connector,
   dnsimple_client_id: "bbf472f1dcc6d611",
