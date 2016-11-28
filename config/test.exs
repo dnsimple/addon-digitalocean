@@ -9,15 +9,6 @@ config :digitalocean_connector, DigitalOceanConnector.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
-# Configure your database
-config :digitalocean_connector, DigitalOceanConnector.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  # password: "postgres",
-  database: "digitalocean_connector_test",
-  hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
-
 config :digitalocean_connector,
   dnsimple_client_id: "dnsimple-client-id",
   dnsimple_client_secret: "dnsimple-client-secret",
@@ -26,4 +17,5 @@ config :digitalocean_connector,
   digitalocean_client_secret: "digitalocean-client-secret",
   dnsimple_oauth_service: DigitalOceanConnector.Dnsimple.OauthMock,
   dnsimple_identity_service: DigitalOceanConnector.Dnsimple.IdentityMock,
+  dnsimple_domains_service: DigitalOceanConnector.Dnsimple.DomainsMock,
   digitalocean_oauth_service: DigitalOceanConnector.DigitalOcean.OauthMock

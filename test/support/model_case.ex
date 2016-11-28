@@ -16,23 +16,11 @@ defmodule DigitalOceanConnector.ModelCase do
 
   using do
     quote do
-      alias DigitalOceanConnector.Repo
-
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
       import DigitalOceanConnector.ModelCase
     end
-  end
-
-  setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(DigitalOceanConnector.Repo)
-
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(DigitalOceanConnector.Repo, {:shared, self()})
-    end
-
-    :ok
   end
 
   @doc """

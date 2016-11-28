@@ -1,0 +1,23 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :dnsimple_domain_id, class: "control-label" %>
+    <%= select f, :dnsimple_domain_id, domain_select_options(@domains), class: "form-control" %>
+    <%= error_tag f, :dnsimple_domain_id %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :digitalocean_droplet_id, class: "control-label" %>
+    <%= select f, :digitalocean_droplet_id, droplet_select_options(@droplets), class: "form-control" %>
+    <%= error_tag f, :digitalocean_droplet_id %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

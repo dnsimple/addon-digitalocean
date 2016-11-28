@@ -22,7 +22,7 @@ defmodule DigitalOceanConnector.DigitalOceanOauthControllerTest do
 
     conn = get conn, digital_ocean_oauth_path(conn, :new)
     conn = get conn, digital_ocean_oauth_path(conn, :create, state: get_session(conn, :digitalocean_oauth_state))
-    assert text_response(conn, 200) =~ "Hello "
+    assert redirected_to(conn) == connection_path(conn, :index)
   end
 
   test "/digitalocean/callback with mismatched state", %{conn: conn} do

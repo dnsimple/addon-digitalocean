@@ -14,7 +14,7 @@ defmodule DigitalOceanConnector.DnsimpleOauthControllerTest do
   test "GET /dnsimple/callback", %{conn: conn} do
     conn = get conn, dnsimple_oauth_path(conn, :new)
     conn = get conn, dnsimple_oauth_path(conn, :create, state: get_session(conn, :dnsimple_oauth_state))
-    assert html_response(conn, 200) =~ "Connected to DNSimple as"
+    assert redirected_to(conn) == connection_path(conn, :index)
   end
 
   test "/dnsimple/callback with mismatched state", %{conn: conn} do

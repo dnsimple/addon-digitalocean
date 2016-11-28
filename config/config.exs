@@ -8,7 +8,7 @@ use Mix.Config
 # General application configuration
 config :digitalocean_connector,
   namespace: DigitalOceanConnector,
-  ecto_repos: [DigitalOceanConnector.Repo]
+  ecto_repos: []
 
 # Configures the endpoint
 config :digitalocean_connector, DigitalOceanConnector.Endpoint,

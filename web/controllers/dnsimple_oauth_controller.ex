@@ -1,8 +1,6 @@
 defmodule DigitalOceanConnector.DnsimpleOauthController do
   use DigitalOceanConnector.Web, :controller
 
-  alias DigitalOceanConnector.Account
-
   def new(conn, _params) do
     client    = %Dnsimple.Client{}
     client_id = Application.fetch_env!(:digitalocean_connector, :dnsimple_client_id)
@@ -27,43 +25,10 @@ defmodule DigitalOceanConnector.DnsimpleOauthController do
     }
     case DigitalOceanConnector.Dnsimple.exchange_authorization_for_token(client, attributes) do
       {:ok, response} ->
-        access_token = response.data.access_token
-        client = %Dnsimple.Client{access_token: access_token}
-        case DigitalOceanConnector.Dnsimple.whoami(client) do
-          {:ok, %Dnsimple.Response{data: data}} ->
-            account = Account.find_or_create!(Integer.to_string(data.account.id), %{
-              "dnsimple_account_email" => data.account.email,
-              "dnsimple_access_token" => access_token
-            })
-
-            # Add a webhook if necessary
-            # require Logger
-            # url = case Mix.env do
-            #   :dev ->
-            #     Logger.debug("Using dev environment")
-            #     Application.get_env(:heroku_connector, :webhook_url)
-            #   env ->
-            #     Logger.debug("Using environment #{inspect env}")
-            #     webhook_url(conn, :handle, account.id)
-            # end
-            # Logger.debug("Creating webhook with url: #{url}")
-            # webhook = HerokuConnector.Dnsimple.create_webhook(account, url)
-            # Logger.debug("Webhook: #{inspect webhook}")
-
-            # account = case Account.update(Account.changeset(account, %{configuration: %{webhook_id: webhook.id}})) do
-            #   {:ok, account} -> account
-            #   {:error, error} ->
-            #     IO.inspect(error)
-            #     raise "Failed to update account with webhook ID: #{inspect error}"
-            # end
-
-            conn
-            |> put_session(:account_id, account.id)
-            |> render("welcome.html", account: account)
-          {:error, error} ->
-            IO.inspect(error)
-            raise "Failed to retreive account details: #{inspect error}"
-        end
+        conn
+        |> put_session(:dnsimple_access_token, response.data.access_token)
+        |> put_session(:dnsimple_account_id, response.data.account_id)
+        |> redirect(to: connection_path(conn, :index))
       {:error, error} ->
         IO.inspect(error)
         raise "OAuth authentication failed: #{inspect error}"

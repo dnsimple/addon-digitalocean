@@ -18,7 +18,12 @@ defmodule DigitalOceanConnector.Dnsimple do
   # Domains
 
   def domains(account) do
-    domains_service.all_domains(client(account), account.id)
+    case domains_service.all_domains(client(account), account.dnsimple_account_id) do
+      {:ok, domains} -> domains
+      {:error, error} ->
+        IO.inspect(error)
+        raise "Failed to retrieve domains: #{inspect error}"
+    end
   end
 
   def domain(account, domain_id) do
@@ -107,12 +112,21 @@ defmodule DigitalOceanConnector.Dnsimple do
 
   # Records
 
+  def get_records(account, zone_name) do
+    case zones_service.list_zone_records(client(account), account.dnsimple_account_id, zone_name) do
+      {:ok, response} -> response.data
+      {:error, error} ->
+        IO.inspect(error)
+        raise "Failed to get records: #{inspect error}"
+    end
+  end
+
   def create_records(account, zone_name, records) do
     c = client(account)
     zs = zones_service
 
     Enum.map(records, fn(record) ->
-      zs.create_zone_record(c, account.id, zone_name, record_to_map(record))
+      zs.create_zone_record(c, account.dnsimple_account_id, zone_name, record_to_map(record))
     end)
   end
 

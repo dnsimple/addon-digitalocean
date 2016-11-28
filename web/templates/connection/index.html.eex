@@ -1,0 +1,30 @@
+<h2>New connection</h2>
+
+<%= render "form.html", changeset: @changeset, domains: @domains, droplets: @droplets,
+                        action: connection_path(@conn, :create) %>
+
+
+<h2>Listing connections</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Dnsimple domain</th>
+      <th>Digitalocean droplet</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for {domain, droplet, records} <- @connections do %>
+    <tr>
+      <td><%= domain.name %></td>
+      <td><%= droplet["name"] %></td>
+
+      <td class="text-right">
+        <%= link "Delete", to: connection_path(@conn, :delete, domain.name, records: Enum.map(records, &(&1.id))), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

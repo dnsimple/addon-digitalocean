@@ -20,7 +20,6 @@ defmodule DigitalOceanConnector.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
 
-      alias DigitalOceanConnector.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
@@ -32,13 +31,7 @@ defmodule DigitalOceanConnector.ConnCase do
     end
   end
 
-  setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(DigitalOceanConnector.Repo)
-
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(DigitalOceanConnector.Repo, {:shared, self()})
-    end
-
+  setup do
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 end
