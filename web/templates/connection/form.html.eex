@@ -6,18 +6,18 @@
   <% end %>
 
   <div class="form-group">
-    <%= label f, :dnsimple_domain_id, class: "control-label" %>
+    <%= label f, :dnsimple_domain_id, "DNSimple Domain", class: "control-label" %>
     <%= select f, :dnsimple_domain_id, domain_select_options(@domains), class: "form-control" %>
     <%= error_tag f, :dnsimple_domain_id %>
   </div>
 
   <div class="form-group">
-    <%= label f, :digitalocean_droplet_id, class: "control-label" %>
+    <%= label f, :digitalocean_droplet_id, "DigitalOcean Droplet", class: "control-label" %>
     <%= select f, :digitalocean_droplet_id, droplet_select_options(@droplets), class: "form-control" %>
     <%= error_tag f, :digitalocean_droplet_id %>
   </div>
 
   <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
+    <%= submit "Connect", class: "btn btn-primary" %>
   </div>
 <% end %>
