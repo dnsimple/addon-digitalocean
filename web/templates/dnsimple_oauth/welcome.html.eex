@@ -1,5 +1,0 @@
-<div class="jumbotron">
-  <h2>Connected to DNSimple as</h2>
-  <p class="lead"><%= @account.dnsimple_account_email %></p>
-  <%= link "Continue to authrorize with Digital Ocean", to: digital_ocean_oauth_path(@conn, :new) %>
-</div>
