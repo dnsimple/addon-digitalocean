@@ -21,6 +21,14 @@ config :digitalocean_connector, DigitalOceanConnector.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+# Configure 3rd parties
+config :digitalocean_connector,
+  dnsimple_client_id: System.get_env("DNSIMPLE_CLIENT_ID"),
+  dnsimple_client_secret: System.get_env("DNSIMPLE_CLIENT_SECRET"),
+  digitalocean_client_id: System.get_env("DIGITALOCEAN_CLIENT_ID"),
+  digitalocean_callback_url: System.get_env("DIGITALOCEAN_CALLBACK"),
+  digitalocean_client_secret: System.get_env("DIGITALOCEAN_CLIENT_SECRET")
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
