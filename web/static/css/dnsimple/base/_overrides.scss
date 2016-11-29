@@ -1,0 +1,40 @@
+// Roboto font import
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,700");
+
+// DNSimple custom colors
+$blue: #1A5EC6;
+$light-blue: #E5EEFD;
+$near-white: #fafafa;
+$white: #ffffff;
+
+// Tachyons color override
+.blue {
+  color: $blue;
+}
+
+.bg-blue {
+  background-color: $blue;
+}
+
+.light-blue {
+  color: $light-blue;
+}
+
+.bg-light-blue {
+  background-color: $light-blue;
+}
+
+.near-white {
+  color: #fafafa;
+}
+
+.bg-near-white {
+  background-color: #fafafa;
+}
+
+// global body override
+body {
+  font-family: "Roboto", sans-serif;
+  @extend .bg-near-white;
+  @extend .near-black;
+}

@@ -1,0 +1,18 @@
+.dn-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  background: $white;
+  border: 1px solid $light-gray;
+  tr {
+    &:nth-child(odd) {
+      background: $light-gray;
+    }
+  }
+  th {
+    text-align: left;
+  }
+  th, td {
+    padding: $spacing-medium;
+  }
+}
