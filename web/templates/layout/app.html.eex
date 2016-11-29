@@ -12,19 +12,30 @@
   </head>
 
   <body>
-    <div class="container">
-      <header class="header">
-        <span class="logo"></span>
-      </header>
+    <header class="dn-navbar container mb4">
+      <div class="dn-navbar-branding">
+        <a class="dib v-mid link black" href="<%= page_path(@conn, :index) %>">
+          Digital Ocean Connector
+        </a>
+      </div>
+    </header>
+    <div class="container min-vh-100">
+      <%= if get_flash(@conn, :info) do %>
+        <p class="dn-alert dn-alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+      <% end %>
 
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <%= if get_flash(@conn, :error) do %>
+        <p class="dn-alert dn-alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <% end %>
 
       <main role="main">
         <%= render @view_module, @view_template, assigns %>
       </main>
+    </div>
+    <footer class="dn-footer container">
+      <span class="dib v-mid">Digital Ocean Connector</span>
+    </footer>
 
-    </div> <!-- /container -->
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
