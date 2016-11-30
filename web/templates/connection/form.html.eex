@@ -1,23 +1,31 @@
-<%= form_for @changeset, @action, fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+<div class="mw7 mb4 center">
+  <%= form_for @changeset, @action, fn f -> %>
+    <%= if @changeset.action do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
+    <% end %>
+
+    <div class="pa4 mb4 bg-white ba b--light-gray br2">
+      <h3 class="dib ma0 pl1 f3 fw4 v-mid">Droplets</h3>
+      <p class="gray">Showing <%= Enum.count(@droplets) %> droplets</p>
+      <%= for droplet <- @droplets do %>
+        <div class="pv2">
+          <input type="radio"["name"]="digitalocean_droplet_id" id="<%= droplet["name"] %>" value="<%= droplet["name"] %>"/>
+          <label for="<%= droplet["name"] %>" class="pl1 pointer"><%= droplet["name"] %></label>
+        </div>
+      <% end %>
+    </div>
+
+    <%= for domain <- @domains do %>
+      <div class="pv2">
+        <input type="radio" name="dnsimple_domain_id" id="<%= domain.name %>" value="<%= domain.name %>"/>
+        <label for="<%= domain.name %>" class="pl1 pointer"><%= domain.name %></label>
+      </div>
+    <% end %>
+
+    <div class="pt3">
+      <%= submit "Connect", class: "dn-btn dn-btn-primary" %>
     </div>
   <% end %>
-
-  <div class="form-group">
-    <%= label f, :dnsimple_domain_id, "DNSimple Domain", class: "control-label" %>
-    <%= select f, :dnsimple_domain_id, domain_select_options(@domains), class: "form-control" %>
-    <%= error_tag f, :dnsimple_domain_id %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :digitalocean_droplet_id, "DigitalOcean Droplet", class: "control-label" %>
-    <%= select f, :digitalocean_droplet_id, droplet_select_options(@droplets), class: "form-control" %>
-    <%= error_tag f, :digitalocean_droplet_id %>
-  </div>
-
-  <div class="form-group">
-    <%= submit "Connect", class: "btn btn-primary" %>
-  </div>
-<% end %>
+</div>
