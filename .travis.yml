@@ -5,6 +5,9 @@ dist: trusty
 elixir:
 - 1.3.2
 
+before_install:
+  - cp config/dev.secret.exs-example config/dev.secret.exs
+
 deploy:
   provider: heroku
   app: addon-digitalocean-connector
