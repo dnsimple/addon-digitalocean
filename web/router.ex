@@ -17,6 +17,8 @@ defmodule DigitalOceanConnector.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    post "/logout", PageController, :logout
+    get "/bye", PageController, :bye
 
     get "/dnsimple/authorize", DnsimpleOauthController, :new
     get "/dnsimple/callback", DnsimpleOauthController, :create
