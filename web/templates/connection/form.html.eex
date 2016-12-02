@@ -17,15 +17,18 @@
       <% end %>
     </div>
 
-    <%= for domain <- @domains do %>
-      <div class="pv2">
-        <input type="radio" name="dnsimple_domain_id" id="<%= domain.name %>" value="<%= domain.name %>"/>
-        <label for="<%= domain.name %>" class="pl1 pointer"><%= domain.name %></label>
-      </div>
-    <% end %>
+    <div class= "pa4 mb4 bg-white ba b--light-gray br2">
+      <h3 class="dip ma0 pl1 f3 fw4 v-mid">Domains</h3>
+      <p class="gray">Showing <%=Enum.count(@domains) %> domains</p> 
+      <%= for domain <- @domains do %>
+        <div class="pv2">
+          <input type="radio" name="dnsimple_domain_id" id="<%= domain.name %>" value="<%= domain.name %>"/>
+          <label for="<%= domain.name %>" class="pl1 pointer"><%= domain.name %></label>
+        </div>
+      <% end %>
+    </div>
 
     <div class="pt3">
       <%= submit "Connect", class: "dn-btn dn-btn-primary" %>
     </div>
   <% end %>
-</div>
