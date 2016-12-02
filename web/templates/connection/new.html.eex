@@ -1,6 +1,7 @@
 <h2>New connection</h2>
 
 <%= render "form.html", changeset: @changeset,
+                        conn: @conn,
                         action: connection_path(@conn, :create),
                         domains: @domains, droplets: @droplets %>
 
