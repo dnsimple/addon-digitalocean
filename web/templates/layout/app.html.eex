@@ -14,9 +14,12 @@
   <body>
     <header class="dn-navbar container mb4">
       <div class="dn-navbar-branding">
-        <a class="dib v-mid link black" href="<%= page_path(@conn, :index) %>">
+        <a class="dib v-mid link black" href="<%= connection_path(@conn, :index) %>">
           Digital Ocean Connector
         </a>
+        <%= if @conn.assigns[:current_account] do %>
+          <%= link("Log out", to: page_path(@conn, :logout), method: :post, class: "dib v-mid link black") %>
+        <% end %>
       </div>
     </header>
     <div class="container min-vh-100">

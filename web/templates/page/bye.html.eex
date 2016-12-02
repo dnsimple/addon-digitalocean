@@ -1,0 +1,3 @@
+<h1>Bye bye</h1>
+
+<%= link("Log back in", to: connection_path(@conn, :index)) %>
