@@ -1,13 +1,13 @@
 <div class="mw7 mb4 center">
-  <%= form_for @changeset, @action, fn f -> %>
+  <%= form_for @changeset, @action,  fn f -> %>
     <%= if @changeset.action do %>
       <div class="alert alert-danger">
         <p>Oops, something went wrong! Please check the errors below.</p>
       </div>
     <% end %>
-
     <div class="pa4 mb4 bg-white ba b--light-gray br2">
-      <h3 class="dib ma0 pl1 f3 fw4 v-mid">Droplets</h3>
+      <img class="dib w2 v-mid" src="<%= static_path(@conn, "/images/digitalocean-logo.png") %>" alt="" />
+      <h3 class="dib ma0 pl1 f3 fw4 v-mid">Domains</h3>
       <p class="gray">Showing <%= Enum.count(@droplets) %> droplets</p>
       <%= for droplet <- @droplets do %>
         <div class="pv2">
@@ -18,8 +18,9 @@
     </div>
 
     <div class= "pa4 mb4 bg-white ba b--light-gray br2">
-      <h3 class="dip ma0 pl1 f3 fw4 v-mid">Domains</h3>
-      <p class="gray">Showing <%=Enum.count(@domains) %> domains</p> 
+      <img class="dib w2 v-mid" src="<%= static_path(@conn, "/images/dnsimple-logo.svg") %>" alt="" />
+      <h3 class="dib ma0 pl1 f3 fw4 v-mid">Domains</h3>
+      <p class="gray">Showing <%=Enum.count(@domains) %> domains</p>
       <%= for domain <- @domains do %>
         <div class="pv2">
           <input type="radio" name="dnsimple_domain_id" id="<%= domain.name %>" value="<%= domain.name %>"/>
@@ -28,7 +29,6 @@
       <% end %>
     </div>
 
-    <div class="pt3">
-      <%= submit "Connect", class: "dn-btn dn-btn-primary" %>
-    </div>
+    <%= submit "Connect", class: "dn-btn dn-btn-lg dn-btn-primary" %>
   <% end %>
+</div>
