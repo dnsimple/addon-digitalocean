@@ -10,10 +10,11 @@ defmodule DigitalOceanConnector.ConnectionController do
 
   def index(conn, _params) do
     account = conn.assigns[:current_account]
-    render(conn, "index.html", changeset: Connection.changeset(%Connection{}),
-                      domains: Dnsimple.domains(account),
-                      droplets: DigitalOcean.list_droplets(account.digitalocean_access_token),
-                      connections: ConnectionService.get_connections(account))
+    connections = ConnectionService.get_connections(account)
+    case length(connections) do
+      0 -> redirect(conn, to: connection_path(conn, :new))
+      _ -> render(conn, "index.html", connections: connections)
+    end
   end
 
   def new(conn, _params) do
