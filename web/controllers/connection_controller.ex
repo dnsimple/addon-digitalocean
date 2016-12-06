@@ -24,7 +24,7 @@ defmodule DigitalOceanConnector.ConnectionController do
                               droplets: DigitalOcean.list_droplets(account.digitalocean_access_token))
   end
 
-  def create(conn, %{"connection" => %{"dnsimple_domain_id" => domain_name, "digitalocean_droplet_id" => droplet_id}}) do
+  def create(conn, %{"dnsimple_domain_id" => domain_name, "digitalocean_droplet_id" => droplet_id}) do
     account = conn.assigns[:current_account]
 
     ConnectionService.create_connection(domain_name, droplet_id, account)

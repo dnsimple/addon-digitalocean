@@ -11,7 +11,7 @@
       <p class="gray">Showing <%= Enum.count(@droplets) %> droplets</p>
       <%= for droplet <- @droplets do %>
         <div class="pv2">
-          <input type="radio"["name"]="digitalocean_droplet_id" id="<%= droplet["name"] %>" value="<%= droplet["name"] %>"/>
+          <input type="radio" name="digitalocean_droplet_id" id="<%= droplet["name"] %>" value="<%= droplet["id"] %>"/>
           <label for="<%= droplet["name"] %>" class="pl1 pointer"><%= droplet["name"] %></label>
         </div>
       <% end %>
