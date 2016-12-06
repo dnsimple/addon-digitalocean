@@ -24,7 +24,7 @@ defmodule DigitalOceanConnector.ConnectionControllerTest do
   end
 
   test "creates resource and redirects when data is valid", %{conn: conn} do
-    conn = post conn, connection_path(conn, :create), connection: @valid_attrs
+    conn = post conn, connection_path(conn, :create), @valid_attrs
     assert redirected_to(conn) == connection_path(conn, :index)
   end
 
