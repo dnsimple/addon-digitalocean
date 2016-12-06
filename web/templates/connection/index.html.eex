@@ -1,4 +1,4 @@
-<%= link "new connection", to: connection_path @conn, :new  %>
+<%= link "New connection", to: connection_path @conn, :new  %>
 <div class="mw7 mb4 center">
   <h2>Existing Connections</h2>
   <table class="table">
