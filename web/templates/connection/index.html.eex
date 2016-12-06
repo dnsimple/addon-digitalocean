@@ -1,10 +1,4 @@
-<div class="mw7 mb4 center">
-  <h2>New Connection</h2>
-  <p class="gray">Select the Digital Ocean droplet and domain name you'd like it to be connected with.</p>
-</div>
-
-<%= render "form.html", changeset: @changeset, domains: @domains, droplets: @droplets, conn: @conn, action: connection_path(@conn, :create) %>
-
+<%= link "new connection", to: connection_path @conn, :new  %>
 <div class="mw7 mb4 center">
   <h2>Existing Connections</h2>
   <table class="table">
