@@ -23,3 +23,17 @@ defmodule DigitalOceanConnector.Dnsimple.DomainsMock do
     {:ok, %Dnsimple.Response{data: %Dnsimple.Domain{name: name}}}
   end
 end
+
+defmodule DigitalOceanConnector.Dnsimple.ZonesMock do
+  def list_zone_records(_client, _account_id, _zone_id, _options \\ []) do
+    {:ok, %Dnsimple.Response{data: []}}
+  end
+
+  def create_zone_record(_client, _account_id, _zone_id, _attributes, _options \\ []) do
+    {:ok, %Dnsimple.Response{data: []}}
+  end
+
+  def delete_zone_record(_client, _account_id, _zone_id, _record_id, _options \\ []) do
+    {:ok, []}
+  end
+end
