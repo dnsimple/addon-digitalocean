@@ -1,8 +1,6 @@
 defmodule DigitalOceanConnector.ConnectionControllerTest do
   use DigitalOceanConnector.ConnCase
 
-  alias DigitalOceanConnector.Connection
-
   @valid_attrs %{digitalocean_droplet_id: 42, dnsimple_domain_id: "some content"}
   @invalid_attrs %{}
 
