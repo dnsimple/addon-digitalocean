@@ -18,4 +18,5 @@ config :digitalocean_connector,
   dnsimple_oauth_service: DigitalOceanConnector.Dnsimple.OauthMock,
   dnsimple_identity_service: DigitalOceanConnector.Dnsimple.IdentityMock,
   dnsimple_domains_service: DigitalOceanConnector.Dnsimple.DomainsMock,
+  dnsimple_zones_service: DigitalOceanConnector.Dnsimple.ZonesMock,
   digitalocean_oauth_service: DigitalOceanConnector.DigitalOcean.OauthMock

@@ -3,9 +3,6 @@ defmodule DigitalOceanConnector.ConnectionServiceTest do
 
   alias DigitalOceanConnector.ConnectionService
 
-
-  # networks = [{"v4", "159.203.139.124"}, {"v6", nil}]
-
   test "#get_zone_records returns CNAME record" do
     networks = [{"v4", "159.203.139.124"}]
     records = ConnectionService.get_zone_records networks, "example.com"
@@ -74,7 +71,7 @@ defmodule DigitalOceanConnector.ConnectionServiceTest do
     ]
   end
 
-  def record(records, type) do
+  defp record(records, type) do
     Enum.find(records, &(&1.type == type))
   end
 end

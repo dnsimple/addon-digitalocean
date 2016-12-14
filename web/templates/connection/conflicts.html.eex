@@ -1,0 +1,18 @@
+<h2>Conflicting Records</h2>
+<p>You already have some records which would conflict with the one to be created to make the connection:</p>
+
+<ul>
+  <%= for record <- @records do %>
+  <li><strong><%= record.type %></strong> <%= record.name %> <%= record.content %></li>
+  <% end %>
+</ul>
+
+
+<%= form_for @changeset, connection_path(@conn, :create), fn f -> %>
+    <%= hidden_input f, :dnsimple_domain_id, value: @dnsimple_domain_id %>
+    <%= hidden_input f, :digitalocean_droplet_id, value: @digitalocean_droplet_id %>
+    <%= hidden_input f, :ack_conflicts, value: true %>
+    <%= submit "Delete conflicting records", class: "btn btn-danger" %>
+<% end %>
+
+<%= button("Back", to: connection_path(@conn, :index), class: "btn btn-default")  %>
