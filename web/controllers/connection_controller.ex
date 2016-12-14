@@ -23,14 +23,22 @@ defmodule DigitalOceanConnector.ConnectionController do
                               droplets: DigitalOcean.list_droplets(account.digitalocean_access_token))
   end
 
-  def create(conn, %{"connection" => %{"dnsimple_domain_id" => domain_name, "digitalocean_droplet_id" => droplet_id}}) do
+  def create(conn, %{"connection" => %{"dnsimple_domain_id" => domain_name, "digitalocean_droplet_id" => droplet_id} = connection}) do
     account = conn.assigns[:current_account]
 
-    ConnectionService.create_connection(domain_name, droplet_id, account)
-
-    conn
-    |> put_flash(:info, "Connection created successfully.")
-    |> redirect(to: connection_path(conn, :index))
+    conflicting_records = ConnectionService.get_conflicting_records(domain_name, account)
+    if (length(conflicting_records) == 0 || Map.has_key?(connection, "ack_conflicts")) do
+      Dnsimple.delete_records(account, domain_name, Enum.map(conflicting_records, &(&1.id)))
+      ConnectionService.create_connection(domain_name, droplet_id, account)
+      conn
+      |> put_flash(:info, "Connection created successfully.")
+      |> redirect(to: connection_path(conn, :index))
+    else
+      render(conn, "conflicts.html", changeset: Connection.changeset(%Connection{}),
+                                        records: conflicting_records,
+                                        dnsimple_domain_id: domain_name,
+                                        digitalocean_droplet_id: droplet_id)
+    end
   end
 
   def show(conn, %{"id" => _id}) do
