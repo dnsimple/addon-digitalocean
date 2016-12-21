@@ -5,6 +5,12 @@ This add-on connects your DNSimple domain to a DigitalOcean droplet. Given you w
 - A record to droplet IPv4
 - AAAA record to droplet IPv6 _(if available)_
 
+## Configuration
+
+After cloning this repo please copy the example dev secrets and adjust it to your tokens:
+- `cp config/dev.secret.exs-example config/dev.secret.exs`
+- `emacs config/dev.secret.exs`
+
 ## Development
 
 To start the Phoenix app:
