@@ -1,21 +1,24 @@
-# DigitalOceanConnector
+# DNSimple DigitalOcean connector add-on
 
-To start your Phoenix app:
+This add-on connects your DNSimple domain to a DigitalOcean droplet. Given you want to connect your droplet to `awesome.space` It sets the following records:
+- CNAME www.awesome.space awesome.space
+- A record to droplet IPv4
+- AAAA record to droplet IPv6 _(if available)_
+
+## Development
+
+To start the Phoenix app:
 
   * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Start the Database in a different window `postgres -D /usr/local/var/postgres`
   * Install Node.js dependencies with `npm install`
   * Start Phoenix endpoint with `mix phoenix.server`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+## Tests
 
-## Learn more
+After you followed the steps above use `mix test` to run the tests.
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+## Contribute
+
+If you have a great idea for a contribution we love to see it. If it's a small enhancement, please feel free to open a PR. If it's a bigger change or feature please open a issue upfront so we can discuss it.
