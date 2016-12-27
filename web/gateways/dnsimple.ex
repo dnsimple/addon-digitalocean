@@ -167,7 +167,7 @@ defmodule DigitalOceanConnector.Dnsimple do
   # Client for account
 
   def client(account) do
-    %Dnsimple.Client{access_token: account.dnsimple_access_token}
+    %Dnsimple.Client{access_token: account.dnsimple_access_token, user_agent: "addon-digitalocean"}
   end
 
   # Service modules
