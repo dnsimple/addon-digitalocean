@@ -35,8 +35,6 @@ config :phoenix, :stacktrace_depth, 20
 
 # Configure 3rd parties
 config :digitalocean_connector,
-  dnsimple_client_id: "bbf472f1dcc6d611",
-  digitalocean_client_id: "a5112b0d1ca19f0b01027e87969c778dc9213fe9da2f834a0abcfc28d568f8b7",
   digitalocean_callback_url: "http://localhost:4000/digitalocean/callback"
 
 # Finally import the config/dev.secret.exs
