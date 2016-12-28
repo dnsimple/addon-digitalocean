@@ -19,6 +19,15 @@ defmodule DigitalOceanConnector.ConnectionService do
     find_connections(domains, droplets)
   end
 
+  def get_conflicting_records(domain, account) do
+    DnsimpleGateway.get_records(account, domain)
+    |> Enum.filter(fn (record) ->
+      (record.type == "CNAME" && record.name == "www" && record.content != domain)
+      or (record.type == "A" && record.name == "")
+      or (record.type == "AAAA" && record.name == "")
+    end)
+  end
+
   def find_connections(domains, droplets) do
     Enum.map(domains, fn ({domain, records}) ->
       {domain, Enum.find(droplets, fn(droplet) -> if has_matching_records?(records, domain, droplet), do: droplet, else: nil end), records}
