@@ -7,7 +7,7 @@
     <% end %>
     <div class="pa4 mb4 bg-white ba b--light-gray br2">
       <img class="dib w2 v-mid" src="<%= static_path(@conn, "/images/digitalocean-logo.png") %>" alt="" />
-      <h3 class="dib ma0 pl1 f3 fw4 v-mid">Domains</h3>
+      <h3 class="dib ma0 pl1 f3 fw4 v-mid">Droplets</h3>
       <p class="gray">Showing <%= Enum.count(@droplets) %> droplets</p>
       <%= for droplet <- @droplets do %>
         <div class="pv2">
@@ -18,7 +18,7 @@
     </div>
 
     <div class= "pa4 mb4 bg-white ba b--light-gray br2">
-      <img class="dib w2 v-mid" src="<%= static_path(@conn, "/images/dnsimple-logo.svg") %>" alt="" />
+      <img class="dib w2 v-mid" src="https://make-it-nice.dnsimple.com/images/dnsimple-icon.svg" alt="" />
       <h3 class="dib ma0 pl1 f3 fw4 v-mid">Domains</h3>
       <p class="gray">Showing <%= Enum.count(@domains) %> domains</p>
       <%= for domain <- @domains do %>

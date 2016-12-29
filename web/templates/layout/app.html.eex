@@ -11,12 +11,14 @@
     <link rel="stylesheet" href="https://make-it-nice.dnsimple.com/css/dnsimple-tachyons-1.0.0.min.css">
   </head>
 
-  <body>
-    <header class="dn-navbar container mb4">
+  <body class="dn-body">
+    <header class="dn-navbar pa3 mb4">
       <div class="dn-navbar-branding">
         <a class="dib v-mid link black" href="<%= connection_path(@conn, :index) %>">
           Digital Ocean Connector
         </a>
+      </div>
+      <div class="dn-navbar-nav">
         <%= if @conn.assigns[:current_account] do %>
           <%= link("Log out", to: page_path(@conn, :logout), method: :post, class: "dib v-mid link black") %>
         <% end %>
