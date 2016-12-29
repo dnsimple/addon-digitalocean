@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <title>DNSimple DigitalOcean Connector</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <link rel="stylesheet" href="https://make-it-nice.dnsimple.com/css/dnsimple-tachyons-1.0.0.min.css">
   </head>
 
   <body>
