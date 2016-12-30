@@ -6,6 +6,7 @@ defmodule DigitalOceanConnector.ConnectionController do
   alias DigitalOceanConnector.Connection
   alias DigitalOceanConnector.DigitalOcean
   alias DigitalOceanConnector.Dnsimple
+  alias DigitalOceanConnector.ConnectionService
 
   def index(conn, _params) do
     account = conn.assigns[:current_account]
