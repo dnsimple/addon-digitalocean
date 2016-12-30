@@ -1,7 +1,7 @@
 defmodule DigitalOceanConnector.ConnectionControllerTest do
   use DigitalOceanConnector.ConnCase
 
-  @valid_attrs %{digitalocean_droplet_id: 42, dnsimple_domain_id: "some content"}
+  @valid_attrs %{connection: %{digitalocean_droplet_id: 42, dnsimple_domain_id: "some content"}}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
