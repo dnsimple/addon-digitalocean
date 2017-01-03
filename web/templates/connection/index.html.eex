@@ -1,25 +1,26 @@
-<%= link "New connection", to: connection_path @conn, :new  %>
-<div class="mw7 mb4 center">
+<div class="mw8 mb4 center">
   <h2>Existing Connections</h2>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>DNSimple Domain</th>
-        <th>DigitalOcean Droplet</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <%= for {domain, droplet, records} <- @connections do %>
-        <tr>
-          <td><%= domain.name %></td>
-          <td><%= droplet["name"] %></td>
-
-          <td class="text-right">
-            <%= link "Delete", to: connection_path(@conn, :delete, domain.name, records: Enum.map(records, &(&1.id))), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <%= for {domain, droplet, records} <- @connections do %>
+    <div class="pa2 mb2 bg-white br2 ba b--light-gray">
+      <div class="dt w-100">
+        <div class="dtc">
+          <div class="dib ma1">
+            <img class="dn-connector-icon" src="https://make-it-nice.dnsimple.com/images/dnsimple-icon.svg" alt="DNSimple Domain">
+            <span class="dn-connector-name"><%= domain.name %></span>
+          </div>
+          <img class="dn-connector-icon pv2" src="https://make-it-nice.dnsimple.com/images/connection.svg" alt="Connected to">
+          <div class="dib ma1">
+            <img class="dn-connector-icon" src="<%= static_path(@conn, "/images/digitalocean-logo.png") %>" alt="Digital Ocean">
+            <span class="dn-connector-name"><%= droplet["name"] %></span>
+          </div>
+        </div>
+        <div class="dtc v-mid tr pr1">
+          <%= link "Delete", to: connection_path(@conn, :delete, domain.name, records: Enum.map(records, &(&1.id))), method: :delete, data: [confirm: "Are you sure?"], class: "dn-link-danger" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <div class="pv3">
+    <%= link "New connection", class: "dn-btn-primary", to: connection_path @conn, :new %>
+  </div>
 </div>
