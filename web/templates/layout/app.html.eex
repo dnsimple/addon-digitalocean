@@ -25,13 +25,20 @@
       </div>
     </header>
     <div class="container min-vh-100">
-      <%= if get_flash(@conn, :info) do %>
-        <p class="dn-alert dn-alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <% end %>
 
-      <%= if get_flash(@conn, :error) do %>
-        <p class="dn-alert dn-alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-      <% end %>
+      <div class="mw8 center">
+        <%= if get_flash(@conn, :info) do %>
+          <div class="dn-alert-info" role="alert">
+            <span><%= get_flash(@conn, :info) %></span>
+          </div>
+        <% end %>
+
+        <%= if get_flash(@conn, :error) do %>
+          <div class="dn-alert-danger" role="alert">
+            <span><%= get_flash(@conn, :error) %></span>
+          </div>
+        <% end %>
+      </div>
 
       <main role="main">
         <%= render @view_module, @view_template, assigns %>
