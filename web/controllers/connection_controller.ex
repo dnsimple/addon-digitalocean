@@ -4,16 +4,17 @@ defmodule DigitalOceanConnector.ConnectionController do
   plug DigitalOceanConnector.Plug.CurrentAccount
 
   alias DigitalOceanConnector.Connection
-  alias DigitalOceanConnector.ConnectionService
   alias DigitalOceanConnector.DigitalOcean
   alias DigitalOceanConnector.Dnsimple
+  alias DigitalOceanConnector.ConnectionService
 
   def index(conn, _params) do
     account = conn.assigns[:current_account]
-    render(conn, "index.html", changeset: Connection.changeset(%Connection{}),
-                      domains: Dnsimple.domains(account),
-                      droplets: DigitalOcean.list_droplets(account.digitalocean_access_token),
-                      connections: ConnectionService.get_connections(account))
+    connections = connection_service.get_connections(account)
+    case length(connections) do
+      0 -> redirect(conn, to: connection_path(conn, :new))
+      _ -> render(conn, "index.html", connections: connections)
+    end
   end
 
   def new(conn, _params) do
@@ -61,5 +62,9 @@ defmodule DigitalOceanConnector.ConnectionController do
     conn
     |> put_flash(:info, "Connection deleted successfully.")
     |> redirect(to: connection_path(conn, :index))
+  end
+
+  defp connection_service do
+    Application.get_env(:digitalocean_connector, :connection_service, DigitalOceanConnector.ConnectionService)
   end
 end

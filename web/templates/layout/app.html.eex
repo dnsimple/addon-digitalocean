@@ -8,23 +8,46 @@
     <meta name="author" content="">
 
     <title>DNSimple DigitalOcean Connector</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <link rel="stylesheet" href="https://make-it-nice.dnsimple.com/css/dnsimple-tachyons-1.0.0.min.css">
   </head>
 
-  <body>
-    <div class="container">
-      <header class="header">
-        <span class="logo"></span>
-      </header>
+  <body class="dn-body">
+    <header class="dn-navbar pa3 mb4">
+      <div class="dn-navbar-branding">
+        <a class="dib v-mid link black" href="<%= connection_path(@conn, :index) %>">
+          Digital Ocean Connector
+        </a>
+      </div>
+      <div class="dn-navbar-nav">
+        <%= if @conn.assigns[:current_account] do %>
+          <%= link("Log out", to: page_path(@conn, :logout), method: :post, class: "dib v-mid link black") %>
+        <% end %>
+      </div>
+    </header>
+    <div class="container min-vh-100">
 
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <div class="mw8 center">
+        <%= if get_flash(@conn, :info) do %>
+          <div class="dn-alert-info" role="alert">
+            <span><%= get_flash(@conn, :info) %></span>
+          </div>
+        <% end %>
+
+        <%= if get_flash(@conn, :error) do %>
+          <div class="dn-alert-danger" role="alert">
+            <span><%= get_flash(@conn, :error) %></span>
+          </div>
+        <% end %>
+      </div>
 
       <main role="main">
         <%= render @view_module, @view_template, assigns %>
       </main>
+    </div>
+    <footer class="dn-footer container">
+      <span class="dib v-mid">Digital Ocean Connector</span>
+    </footer>
 
-    </div> <!-- /container -->
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
